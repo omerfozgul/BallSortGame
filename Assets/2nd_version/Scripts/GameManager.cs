@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     public LevelManager LevelManager { get => levelManager;}
     public GameObject WinPanel { get => winPanel;}
     private void Awake() {
+        PlayerPrefs.SetInt("currentLevel", 0);
         levelManager.createCurrentLevel();
         balls = levelManager.getBalls();
         tubes = levelManager.getTubes();
@@ -40,20 +41,26 @@ public class GameManager : MonoBehaviour
             isPanelOpenable = false;
         }
     }
-    public void startNextLevel(){
-        Debug.Log("Cleaning Screen");
+
+    public void cleanScreen(){
         while(tubes.Count > 0){
             TubeView tubeView = tubes[0];
             Destroy(tubeView.TubeGameObject);
             tubes.RemoveAt(0);
         }
         winPanel.SetActive(false);
-
         curStage = 0;
+        isPanelOpenable = true;
+    }
+    public void getReadyLevel(){
+        balls = levelManager.getBalls();
+        tubes = levelManager.getTubes();
+    }
+    public void startNextLevel(){
+        cleanScreen();
         levelManager.createCurrentLevel();
         balls = levelManager.getBalls();
         tubes = levelManager.getTubes();
-        isPanelOpenable = true;
     }
 
     private IEnumerator changeColorTitle(){
@@ -163,7 +170,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(moveTime);
         ballTransform.DOLocalMoveY(tubeTransform.pivot.y, moveTime);
         yield return new WaitForSeconds(moveTime);
-        tubeTransform.pivot = new Vector2(tubeTransform.pivot.x, tubeTransform.pivot.y + 0.2f);//pivot yukar� cekiliyor
+        tubeTransform.pivot = new Vector2(tubeTransform.pivot.x, tubeTransform.pivot.y + 0.2f);//pivot yukari cekiliyor
     }
 }
 

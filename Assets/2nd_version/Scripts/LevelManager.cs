@@ -6,16 +6,11 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private LevelGenerator levelGenerator;
     [SerializeField] private GeneralDataSO generalDataSO;
-
-    [SerializeField] private TextMeshProUGUI levelText;
     private int currentLevelIndex = 0;
-
-
     public void createCurrentLevel() {
         createLevel(currentLevelIndex);
-        levelText.text = "LEVEL" + (currentLevelIndex + 1);
         currentLevelIndex++;
-        PlayerPrefs.SetInt("nextLevel", currentLevelIndex);
+        
     }
     private void createLevel(LevelDataSO levelData) {
         if (levelData == null)
@@ -25,6 +20,7 @@ public class LevelManager : MonoBehaviour
 
     public void createLevel(int levelNum) {
         LevelDataSO levelDataSO = generalDataSO.LevelDataSOArray[levelNum];
+        PlayerPrefs.SetInt("currentLevel", currentLevelIndex);
         createLevel(levelDataSO);
     }
 

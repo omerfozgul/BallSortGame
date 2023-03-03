@@ -31,7 +31,6 @@ public class LevelGenerator : MonoBehaviour
         foreach(TubeData tube in tubes) {
             //creating tube object
             TubeView curTube = Instantiate(tubeViewPrefab, new Vector3(0f, 0f, 0f), Quaternion.identity, Tubes);
-            Debug.Log("index: " + beherIndex);
             curTube.tag = "tube" + beherIndex.ToString();
 
             tubeViews.Add(curTube);
